@@ -3,9 +3,7 @@
 const superagent = require('superagent');
 const pg = require('pg');
 require('dotenv').config();
-
-
-// Initial DATABASE
+// Database set up
 const client = new pg.Client(process.env.DATABASE_URL);
 client.on('error', error => console.error(error));
 client.connect();
@@ -25,6 +23,7 @@ const getLocation = function (request, response) {
     query: request.query.data,
     // if EXISTS
     cacheHit: (results) => {
+      // console.log('results :', results);
       response.send(results.rows[0]);
     },
     // if NOT
