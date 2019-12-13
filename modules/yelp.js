@@ -10,8 +10,7 @@ function Yelp(name, image_url, price, rating, url) {
   this.rating = rating;
   this.url = url;
 }
-
-
+console.log("test");
 const getReviews = function(request, response) {
   const url = `https://api.yelp.com/v3/businesses/search?latitude=${request.query.data.latitude}&longitude=${request.query.data.longitude}`;
   superagent.get(url).set('Authorization', `Bearer ${process.env.YELP_API_KEY}`).then(data => {
