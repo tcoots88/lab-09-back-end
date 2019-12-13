@@ -11,7 +11,6 @@ function Weather(forecast, time){
 const getWeather = function (request, response) {
   const url = `https://api.darksky.net/forecast/${process.env.WEATHER_API_KEY}/${request.query.data.latitude},${request.query.data.longitude}`;
   superagent.get(url).then(data => {
-    // console.log('WeatherDATA : ', data.body.daily.data);
     const weatherData = data.body.daily.data.map(obj => {
       let forecast = obj.summary;
       let formattedTime = new Date(obj.time * 1000).toDateString();

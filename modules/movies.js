@@ -23,7 +23,6 @@ const getLocation = function (request, response) {
     query: request.query.data,
     // if EXISTS
     cacheHit: (results) => {
-      // console.log('results :', results);
       response.send(results.rows[0]);
     },
     // if NOT
