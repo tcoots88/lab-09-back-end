@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(cors());
 
-// API routes
+// retrieving the API info
 app.get('/location', getLocation);
 app.get('/weather', getWeather);
 app.get('/events', getEventBrite);
@@ -41,11 +41,11 @@ function getLocation(request, response) {
   const fieldName = 'search_query';
   const locationHandler = {
     query: request.query.data,
-    // if there is data existing
+    // if EXISTS
     cacheHit: (results) => {
       response.send(results.rows[0]);
     },
-    // if there is no data existing
+    // if NOT
     cacheMiss: () => {
       fetchLocation(request.query.data)
         .then(data => response.send(data));
@@ -61,11 +61,11 @@ function checkDuplicate(handler, tableName, fieldName) {
   return client.query( SQL, values )
     .then(results => {
       if(results.rowCount > 0) {
-        // if there is data existing
+        // if EXISTS
         handler.cacheHit(results);
       }
       else {
-        // if there is no data existing
+        // if NOT
         handler.cacheMiss();
       }
     })
@@ -86,7 +86,7 @@ function fetchLocation(query) {
   })
 }
 
-// Save a location to the DB
+// Save a information into the database
 Location.prototype.saveDB = function() {
   let SQL = `
     INSERT INTO locations
@@ -115,7 +115,7 @@ function getWeather(request, response) {
     response.status(200).send(weatherData);
   }).catch(err => {
     console.error(err);
-    response.status(500).send('Status 500: Internal Server Error');
+    response.status(500).send('You have encountered an error that is entirely your fault');
   });
 }
 
@@ -143,7 +143,7 @@ function getEventBrite(request, response) {
     response.status(200).send(eventData);
   }).catch(err => {
     console.error(err);
-    response.status(500).send('Status 500: Internal Server Error');
+    response.status(500).send('You have encountered an error that is entirely your fault');
   })
 }
 
@@ -176,7 +176,7 @@ function getMovies(request, response) {
     response.status(200).send(movieData);
   }).catch(err => {
     console.error(err);
-    response.status(500).send('Status 500: Internal Server Error');
+    response.status(500).send('You have encountered an error that is entirely your fault');
   })
 }
 
@@ -207,7 +207,7 @@ function getReviews(request, response) {
     response.status(200).send(yelpData);
   }).catch(err => {
     console.error(err);
-    response.status(500).send('Status 500: Internal Server Error');
+    response.status(500).send('You have encountered an error that is entirely your fault');
   })
 }
 
